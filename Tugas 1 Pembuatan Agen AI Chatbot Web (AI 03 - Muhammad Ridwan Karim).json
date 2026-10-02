@@ -1,0 +1,116 @@
+{
+  "name": "Tugas 1 Pembuatan Agen AI Chatbot Web",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Halo! Aku AI Asisten KKA. Ada materi koding atau kecerdasan buatan yang ingin kita diskusikan hari ini?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -304,
+        -192
+      ],
+      "id": "030a9b00-0a5d-4107-a00c-a69a915ab642",
+      "name": "When chat message received",
+      "webhookId": "31905935-37c8-4847-af49-9fb0e1a2dda4"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah asisten guru untuk mata pelajaran KKA (Koding dan Kecerdasan Artifisial) di jenjang SMK. Tugasmu membantu siswa Jurusan TKJT untuk memahami konsep koding dasar dan kecerdasan buatan. Gunakan bahasa Indonesia yang ramah, mudah dipahami siswa SMK, dan berikan contoh koding yang sederhana."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        0,
+        -176
+      ],
+      "id": "66a67e4f-1946-4cf3-b63b-0e68a5934977",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.1-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -80,
+        32
+      ],
+      "id": "a9c6219a-883e-4de2-aa66-06aa3ba673fc",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "KScY2bNax5wxWpOU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        112,
+        48
+      ],
+      "id": "5d2525f7-cf38-4f5c-8ce6-3df01725bfb3",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "662f958b-2c6a-49e2-8dac-a357b562fdf7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "JKKIDbv7Rq1pW0PZ",
+  "tags": []
+}
